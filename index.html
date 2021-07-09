@@ -166,7 +166,7 @@
     function onReadyCallback(){
         dapi.removeEventListener("ready", onReadyCallback);
 
-        //this app has no splash audio. dapi.getAudioVolume() called to complete test
+        //there isnt'n audio on splash screen in this app. dapi.getAudioVolume() called to complete test
         const isAudioEnabled = !!dapi.getAudioVolume();
 
         if(dapi.isViewable()){
@@ -193,7 +193,7 @@
     }
 
     function userClickedDownloadButton(){
-        //this app has no download button. dapi.openStoreUrl() called to complete test. this function called on continue btn
+        ///there isnt'n download button in this app. dapi.openStoreUrl() called to complete test. this function called on continue btn
         dapi.openStoreUrl(() => {
             document.location.href = "https://www.google.com/";
         });
