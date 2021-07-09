@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function getScript(e,i){var n=document.createElement("script");n.type="text/javascript",n.async=!0,i&&(n.onload=i),n.src=e,document.head.appendChild(n)}function parseMessage(e){var i=e.data,n=i.indexOf(DOLLAR_PREFIX+RECEIVE_MSG_PREFIX);if(-1!==n){var t=i.slice(n+2);return getMessageParams(t)}return{}}function getMessageParams(e){var i,n=[],t=e.split("/"),a=t.length;if(-1===e.indexOf(RECEIVE_MSG_PREFIX)){if(a>=2&&a%2===0)for(i=0;a>i;i+=2)n[t[i]]=t.length<i+1?null:decodeURIComponent(t[i+1])}else{var o=e.split(RECEIVE_MSG_PREFIX);void 0!==o[1]&&(n=JSON&&JSON.parse(o[1]))}return n}function getDapi(e){var i=parseMessage(e);if(!i||i.name===GET_DAPI_URL_MSG_NAME){var n=i.data;getScript(n,onDapiReceived)}}function invokeDapiListeners(){for(var e in dapiEventsPool)dapiEventsPool.hasOwnProperty(e)&&dapi.addEventListener(e,dapiEventsPool[e])}function onDapiReceived(){dapi=window.dapi,window.removeEventListener("message",getDapi),invokeDapiListeners()}function init(){window.dapi.isDemoDapi&&(window.parent.postMessage(DOLLAR_PREFIX+SEND_MSG_PREFIX+JSON.stringify({state:"getDapiUrl"}),"*"),window.addEventListener("message",getDapi,!1))}var DOLLAR_PREFIX="$$",RECEIVE_MSG_PREFIX="DAPI_SERVICE:",SEND_MSG_PREFIX="DAPI_AD:",GET_DAPI_URL_MSG_NAME="connection.getDapiUrl",dapiEventsPool={},dapi=window.dapi||{isReady:function(){return!1},addEventListener:function(e,i){dapiEventsPool[e]=i},removeEventListener:function(e){delete dapiEventsPool[e]},isDemoDapi:!0};init();
+    </script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .game-box {
+            position: relative;
+            background-image: url("https://github.com/NikolaiDemchenko/umbrella/blob/feat/create-umbrella-project/img/g4.jpg?raw=true");
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .start-text {
+            align-self: center;
+            z-index: 1;
+            font-size: 5vh;
+            text-align: center;
+            cursor: default;
+        }
+
+        .first-paragraph {
+            color: #fffbc5;
+        }
+
+        .second-paragraph {
+            color: #ffd626;
+        }
+
+        .number-of-umbrellas {
+            position: absolute;
+            top: 6%;
+            left: 53%;
+            font-size: 3vh;
+            color: #431b00;
+        }
+
+        .umbrella1 {
+            position: absolute;
+            top: 34%;
+            left: 87%;
+            width: 14%;
+            height: 17%;
+        }
+
+        .umbrella2 {
+            position: absolute;
+            top: 48%;
+            left: 32%;
+            width: 14%;
+            height: 17%;
+        }
+
+        .umbrella3 {
+            position: absolute;
+            top: 75%;
+            left: 0;
+            width: 35%;
+            height: 9%;
+        }
+
+        .umbrella4 {
+            position: absolute;
+            top: 45%;
+            left: 58%;
+            width: 17%;
+            height: 30%;
+        }
+
+        .umbrella5 {
+            position: absolute;
+            top: 75%;
+            left: 33%;
+            width: 25%;
+            height: 25%;
+        }
+
+        .btn {
+            width: 35%;
+            height: 7%;
+            transform: translateY(100%);
+            transition: transform 1s;
+            cursor: pointer;
+        }
+
+        .btn-animation {
+            transform: translateY(-500%);
+        }
+
+        .umbrella-hide-anim {
+            animation: 1s umbrella-hide;
+        }
+
+        .text-hide-animation {
+            animation: 1s text-hide;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        @keyframes umbrella-hide {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+        @keyframes text-hide {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(500%);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="game-box">
+    <div class="start-text">
+        <p class="first-paragraph">CAN YOU FIND</p>
+        <p class="second-paragraph">5 UMBRELLAS</p>
+    </div>
+    <h2 class="number-of-umbrellas"><span class="number-of-found-umbrellas">0</span>/5</h2>
+    <img class="umbrella1 umbrella" src="https://github.com/NikolaiDemchenko/umbrella/blob/feat/create-umbrella-project/img/zont1.png?raw=true" alt="umbrella">
+    <img class="umbrella2 umbrella" src="https://github.com/NikolaiDemchenko/umbrella/blob/feat/create-umbrella-project/img/zont2.png?raw=true" alt="umbrella">
+    <img class="umbrella3 umbrella" src="https://github.com/NikolaiDemchenko/umbrella/blob/feat/create-umbrella-project/img/zont3.png?raw=true" alt="umbrella">
+    <img class="umbrella4 umbrella" src="https://github.com/NikolaiDemchenko/umbrella/blob/feat/create-umbrella-project/img/zont4.png?raw=true" alt="umbrella">
+    <img class="umbrella5 umbrella" src="https://github.com/NikolaiDemchenko/umbrella/blob/feat/create-umbrella-project/img/zont5.png?raw=true" alt="umbrella">
+    <img class="btn hide" src="https://github.com/NikolaiDemchenko/umbrella/blob/feat/create-umbrella-project/img/knopka.png?raw=true" alt="button">
+</div>
+<!--<audio class="music" src="https://github.com/NikolaiDemchenko/umbrella/blob/feat/create-umbrella-project/audio/umbrellaClick.wav"></audio>-->
+<script>
+
+    window.onload = function(){
+        (dapi.isReady()) ? onReadyCallback() : dapi.addEventListener("ready", onReadyCallback);
+    };
+
+    function onReadyCallback(){
+        dapi.removeEventListener("ready", onReadyCallback);
+
+        //this app has no splash audio. dapi.getAudioVolume() called to complete test
+        const isAudioEnabled = !!dapi.getAudioVolume();
+
+        if(dapi.isViewable()){
+            adVisibleCallback({isViewable: true});
+        }
+
+        dapi.addEventListener("viewableChange", adVisibleCallback);
+        dapi.addEventListener("adResized", adResizeCallback);
+        //the same as with dapi.getAudioVolume()
+        dapi.addEventListener("audioVolumeChange", () => {});
+    }
+
+    function adVisibleCallback(event){
+        const screenSize = dapi.getScreenSize();
+
+        if (event.isViewable) {
+            startAdd(screenSize);
+        }
+
+    }
+
+    function adResizeCallback(event){
+        resizeAdd(event);
+    }
+
+    function userClickedDownloadButton(){
+        //this app has no download button. dapi.openStoreUrl() called to complete test. this function called on continue btn
+        dapi.openStoreUrl(() => {
+            document.location.href = "https://www.google.com/";
+        });
+    }
+
+    function startAdd(screenSize) {
+        const gameBox = document.querySelector('.game-box'),
+            numberOfFoundUmbrellas = document.querySelector('.number-of-found-umbrellas'),
+            btn = document.querySelector('.btn'),
+            // audio = document.querySelector('.music'),
+            umbrella = document.querySelectorAll('.umbrella'),
+            startText = document.querySelector('.start-text');
+        let timerId = 0;
+
+        resizeAdd(screenSize);
+
+        gameBox.addEventListener('click', (event) => {
+            if (startText.classList.contains('hide') === false) {
+                setTimeout(() => {
+                    startText.classList.add('hide');
+                }, 900);
+                startText.classList.add('text-hide-animation');
+                umbrella.forEach(item => {
+                    item.style.cursor = 'pointer';
+                });
+            }
+            else if (event.target.classList.contains('umbrella') && numberOfFoundUmbrellas.textContent !== '3' || event.target.classList.contains('umbrella') && btn.classList.contains('hide')) {
+                numberOfFoundUmbrellas.innerText = +numberOfFoundUmbrellas.textContent + 1;
+                event.target.style.cursor = 'default';
+                setTimeout(() => {
+                    event.target.classList.toggle('hide');
+                },900);
+                event.target.classList.toggle('umbrella-hide-anim');
+                // audio.play();
+            }
+
+            if (numberOfFoundUmbrellas.textContent === '3' && event.target !== gameBox) {
+                umbrella.forEach(item => {
+                    if (item.classList.contains('hide') === false) {
+                        item.style.cursor = 'default';
+                    }
+                });
+                btn.classList.remove('hide');
+                timerId = setTimeout(() => {
+                    btn.classList.add('btn-animation');
+                }, 0);
+            }
+
+            if (event.target.classList.contains('btn')) {
+                umbrella.forEach(item => {
+                    if (item.classList.contains('hide') === false) {
+                        item.style.cursor = 'pointer';
+                    }
+                });
+                btn.classList.remove('btn-animation');
+                setTimeout(() => {
+                    btn.classList.add('hide');
+                },1001);
+                clearTimeout(timerId);
+                userClickedDownloadButton();
+            }
+        });
+    }
+
+    function resizeAdd (screenSize) {
+
+        const gameBox = document.querySelector('.game-box');
+
+        if (+screenSize.width > +screenSize.height) {
+            gameBox.style.width = "35%";
+            gameBox.style.height = screenSize.height + 'px';
+        } else {
+            gameBox.style.width = screenSize.width + 'px';
+            gameBox.style.height = screenSize.height + 'px';
+        }
+
+    }
+
+</script>
+</body>
+</html>
